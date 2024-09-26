@@ -7,7 +7,7 @@ This project is a collection of scripts and firmware designed for secure data tr
 
 ## Contents
 
-1. [Updater Server Script](Updater_Server_Script)
+1. [Updater Server Script](#Updater_Server_Script)
 2. [NTP Server Script](#ntp-server-script)
 3. [Binary File Encryptor](#binary-file-encryptor)
 4. [Bootloader Firmware](#bootloader-firmware)
