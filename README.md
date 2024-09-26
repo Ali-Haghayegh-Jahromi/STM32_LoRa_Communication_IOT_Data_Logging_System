@@ -3,7 +3,9 @@
 
 ## Overview
 
-This project is a collection of scripts and firmware designed for secure data transfer, device firmware updates, and bootloader functionalities for embedded systems. Below are detailed descriptions of each script and their purposes.
+The STM32_LoRa_Communication_IOT_Data_Logging_System project is an integrated suite of scripts and firmware solutions that enable secure data logging, reliable communication, and over-the-air (OTA) firmware updates for IoT-enabled embedded systems. This system leverages the STM32 microcontroller platform and LoRa (Long Range) communication technology to provide efficient and robust data handling capabilities in remote or distributed applications.
+
+The project is divided into several key components, each responsible for a unique functionality, from data logging and communication to secure firmware management and updates. Below is a comprehensive description of each script and its purpose within the system.
 
 ## Contents
 
