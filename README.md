@@ -86,28 +86,59 @@ uint8_t iv[AES_IV_SIZE] = "yyyyyyyyyyyyyyyy";  // Initialization Vector
 uint8_t key[AES_KEYLEN] = "xxxxxxxxxxxxxxxx";  // Encryption Key
 ```
 
-## Bootloader Firmware
 
-### Description
+# Bootloader Firmware
 
-The Bootloader Firmware is an STM32-based firmware that facilitates the secure and reliable update of device firmware. It includes features for flashing, updating, and executing new firmware versions.
+## Description
+The Bootloader Firmware is an STM32-based firmware that facilitates the secure and reliable update of device firmware. It includes features for flashing, updating, and executing new firmware versions. The bootloader operates by initializing the SIM module, connecting to an update server via TCP, and managing firmware updates through a secure and verified process.
 
-### Key Features
+## Key Features
+- **File Handling**: Reads and writes update files from the SD card. The bootloader gathers lines of encrypted hex data from the update server, temporarily storing them before processing.
+- **Flash Programming**: Programs the new firmware into the STM32 flash memory. After verifying the integrity of the received data, it decrypts the hex lines and rewrites the flash memory, ensuring the updated firmware is accurately programmed.
+- **Integrity Check**: Verifies the integrity of the received update before programming. Each line of data is checked for faults during transmission and again during the flashing process to prevent the installation of corrupted or incomplete firmware.
+- **SIM Module Initialization**: Initializes the SIM module to establish a TCP connection with the update server, enabling the download of firmware updates.
+- **Authentication and Version Control**: Authenticates the device with the server and sends the current firmware version to determine if an update is required.
 
-- **File Handling:** Reads and writes update files from the SD card.
-- **Flash Programming:** Programs the new firmware into the STM32 flash memory.
-- **Integrity Check:** Verifies the integrity of the received update before programming.
-
-### Usage
-
+## Usage
 1. Place the update file on the SD card.
 2. The bootloader will read and program the new firmware automatically or manually based on the mode selected.
+3. If the update is initiated via the server:
+   - The bootloader connects to the update server using the SIM module.
+   - After authentication, the server sends the required update based on the current firmware version.
+   - The bootloader receives the encrypted hex data and verifies its integrity.
+   - The encrypted data is decrypted, and the firmware is updated in the flash memory line by line.
+
+## Flash Update Function
 
 ```c
 void flash_update(char* st) {
     // Function to update flash with new firmware data
 }
 ```
+
+## Bootloader Update Process
+
+1. **Initialization and Connection**:
+    - SIM Module Initialization: Ensures connectivity.
+    - Connecting to Update Server: Establishes a TCP connection for firmware update.
+
+2. **Authentication and Version Check**:
+    - Authentication: Verifies device identity.
+    - Sending Firmware Version: Determines if an update is required.
+
+3. **Firmware Update Process**:
+    - Receiving Encrypted Hex Lines: Collects update data from the server.
+    - Integrity Check: Verifies the data's integrity.
+
+4. **Flash Memory Update**:
+    - Reading and Decrypting Firmware: Reads the encrypted firmware line by line.
+    - Writing to Flash Memory: Rewrites flash memory with the decrypted firmware.
+    - Error Checking: Halts update if any discrepancies are found.
+
+5. **Finalization**:
+    - Successful Update Verification: Ensures the firmware is correctly installed.
+    - Rebooting the System: Reboots to apply the new firmware.
+
 
 # Main Firmware
 
